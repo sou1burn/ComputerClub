@@ -1,0 +1,26 @@
+#pragma once
+#include <string>
+
+namespace club {
+struct Time {
+    int hour {};
+    int minute {};
+    static Time fromString(const std::string& value);
+    std::string toString() const;
+    Time roundUp() const;
+    bool operator<(const Time& other) const;
+    bool operator>(const Time& other) const;
+    Time operator-(const Time& other) const;
+    bool operator==(const Time& other) const;
+    int toMinutes() const;
+    static Time fromMinutes(const int &minutes) ;
+
+};
+
+class Club
+{
+
+};
+
+
+} // namespace club
