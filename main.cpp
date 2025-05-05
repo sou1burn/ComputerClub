@@ -4,15 +4,20 @@
 #include <sstream>
 #include "client.h"
 #include "club.h"
+#include "utils.h"
 #include "table.h"
 
-struct Event
+namespace helpers
 {
-    club::Time m_time;
-    int m_id;
-    std::string m_name;
-    std::optional<int> m_tableId;
-};
+    struct Event
+    {
+        helpers::Time m_time;
+        int m_id;
+        std::string m_name;
+        std::optional<int> m_tableId;
+    };
+   
+}
 
 
 int main(int argc, char** argv) {
@@ -34,14 +39,14 @@ int main(int argc, char** argv) {
 
     file >> costPerHour;
 
-    std::vector<Event> events;
+    std::vector<helpers::Event> events;
     std::string line;
     std::getline(file, line);
     while (std::getline(file, line)) {
         std::istringstream iss(line);
-        Event event;
+        helpers::Event event;
         std::string time;
-        iss >> time >> event.m_id >> event.m_name >> tableIdStr;
+        iss >> time >>event.m_id >> event.m_name >> tableIdStr;
         if (!tableIdStr.empty()) {
             std::istringstream(tableIdStr) >> std::ws;
             if (std::isdigit(tableIdStr[0]))
@@ -51,7 +56,7 @@ int main(int argc, char** argv) {
         } else
             event.m_tableId = std::nullopt;
 
-        event.m_time = club::Time::fromString(time);
+        event.m_time = helpers::Time::fromString(time);
         events.push_back(event);
     }
 

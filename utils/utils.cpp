@@ -2,7 +2,7 @@
 #include <iomanip>
 #include "utils.h"
 
-namespace club
+namespace helpers
 {
 Time Time::fromString(const std::string &value)
 {

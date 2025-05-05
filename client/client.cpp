@@ -4,7 +4,7 @@
 
 namespace client
 {
-Client::Client(const club::Time &arrivalTime, std::string name)
+Client::Client(const helpers::Time &arrivalTime, std::string name)
     : m_name(std::move(name)), m_arrivalTime(arrivalTime)
 {
 }
@@ -12,7 +12,7 @@ const std::string &Client::name() const
 {
     return m_name;
 }
-const club::Time &Client::arrivalTime() const
+const helpers::Time &Client::arrivalTime() const
 {
     return m_arrivalTime;
 }
@@ -47,7 +47,7 @@ void Client::setInQueue(const bool &inQueue)
     m_inQueue = inQueue;
 }
 
-void Client::setArrivalTime(const club::Time &arrivalTime)
+void Client::setArrivalTime(const helpers::Time &arrivalTime)
 {
     m_arrivalTime = arrivalTime;
 }

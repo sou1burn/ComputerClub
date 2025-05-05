@@ -20,7 +20,7 @@ const std::string &Table::clientName() const
     return m_clientName;
 }
 
-const club::Time &Table::spentTime() const
+const helpers::Time &Table::spentTime() const
 {
     return m_spentTime;
 }
@@ -30,14 +30,14 @@ const int &Table::moneyEarned() const
     return m_money;
 }
 
-void Table::occupy(const std::string &clientName, const club::Time &startTime)
+void Table::occupy(const std::string &clientName, const helpers::Time &startTime)
 {
     m_occupied = true;
     m_clientName = clientName;
     m_startTime = startTime;
 }
 
-void Table::release(const club::Time &endTime)
+void Table::release(const helpers::Time &endTime)
 {
     m_occupied = false;
     m_spentTime = endTime - m_startTime;
@@ -49,8 +49,8 @@ void Table::reset()
     m_occupied = false;
     m_money = 0;
     m_clientName.clear();
-    m_spentTime = club::Time();
-    m_startTime = club::Time();
+    m_spentTime = helpers::Time();
+    m_startTime = helpers::Time();
 }
 
 std::string Table::status() const

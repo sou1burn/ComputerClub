@@ -2,7 +2,7 @@
 
 namespace club {
 
-Club::Club(const int &tableCount, const int &costPerHour, const Time &openTime, const Time &closeTime)
+Club::Club(const int &tableCount, const int &costPerHour, const helpers::Time &openTime, const helpers::Time &closeTime)
     : m_costPerHour(costPerHour),
       m_openTime(openTime),
       m_closeTime(closeTime)

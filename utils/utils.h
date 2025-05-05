@@ -1,7 +1,7 @@
 #pragma once
 #include <string>
 
-namespace club {
+namespace helpers {
 struct Time {
     int hour {};
     int minute {};
