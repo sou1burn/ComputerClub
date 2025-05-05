@@ -13,6 +13,6 @@ set(CLUB_SOURCES club.cpp
 
 add_library(CLUB ${CLUB_SOURCES})
 
-target_include_directories(CLUB PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+target_include_directories(CLUB PUBLIC ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_SOURCE_DIR})
 
-#target_link_libraries(client PUBLIC CLIENT)
+target_link_libraries(CLUB PUBLIC UTILS CLIENT TABLE)

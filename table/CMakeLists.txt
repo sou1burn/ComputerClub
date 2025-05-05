@@ -13,10 +13,7 @@ set(TABLE_SOURCES table.cpp
 
 add_library(TABLE ${TABLE_SOURCES})
 
-target_include_directories(TABLE PUBLIC
-        ${CMAKE_CURRENT_SOURCE_DIR}
-        ${CMAKE_SOURCE_DIR}/club
-)
+target_include_directories(TABLE PUBLIC ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_SOURCE_DIR}/club ${CMAKE_SOURCE_DIR}/utils)
 
-target_link_libraries(TABLE PUBLIC CLUB)
+target_link_libraries(TABLE PUBLIC UTILS)
 

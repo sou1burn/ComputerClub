@@ -19,4 +19,4 @@ target_include_directories(CLIENT PUBLIC
         ${CMAKE_SOURCE_DIR}/club
 )
 
-target_link_libraries(CLIENT PUBLIC CLUB)
+target_link_libraries(CLIENT PUBLIC UTILS)
