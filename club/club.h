@@ -17,11 +17,8 @@ class Club
 public:
     explicit Club(const int &tableCount, const int &costPerHour, const helpers::Time &openTime, const helpers::Time &closeTime, const std::set<client::Client> &clients);
     ~Club() = default;
-    void addClient(const client::Client &client);
-    void assignTable(const client::Client &client, const int &tableId);
     void processEvent(const helpers::Event &event);
-    void freeAllTables();
-    void freeTable(const int &tableId);
+    void closeClubAndLogEverything();
     const std::vector<std::string> &getLogs();
 
 private:

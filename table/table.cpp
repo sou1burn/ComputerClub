@@ -42,7 +42,7 @@ void Table::release(const helpers::Time &endTime)
 {
     m_occupied = false;
     m_spentTime = endTime - m_startTime;
-    m_money = m_spentTime.toMinutes() * m_cost / 60;
+    m_money += m_spentTime.toMinutes() * m_cost / 60;
 }
 
 void Table::reset()

@@ -68,9 +68,7 @@ int main(int argc, char** argv) {
     for (const auto &event : events)
         club.processEvent(event);
 
-    auto logs = club.getLogs();
-    for (const auto& log : logs)
-        std::cout << log << "\n";
+    club.closeClubAndLogEverything();
 
     return 0;
 }
