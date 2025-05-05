@@ -14,7 +14,7 @@ public:
     std::string status() const;
 
     const int &id() const;
-    const bool &isOccupied() const;
+    bool isOccupied() const;
     const std::string& clientName() const;
     const helpers::Time& spentTime() const;
     const int &moneyEarned() const;

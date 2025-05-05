@@ -1,6 +1,7 @@
 #include "table.h"
 
 namespace table {
+
 Table::Table(const int &id, const int &cost) : m_id(id), m_cost(cost)
 {
 }
@@ -10,7 +11,7 @@ const int &Table::id() const
     return m_id;
 }
 
-const bool &Table::isOccupied() const
+bool Table::isOccupied() const
 {
     return m_occupied;
 }

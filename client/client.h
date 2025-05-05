@@ -10,6 +10,7 @@ public:
     explicit Client(const helpers::Time &arrivalTime, std::string name);
 
     ~Client() = default;
+    Client& operator=(const Client& other) = default;
 
     const std::string &name() const;
     const helpers::Time &arrivalTime() const;
@@ -20,6 +21,8 @@ public:
     void setInQueue(const bool &inQueue);
     const bool &atClub() const;
     const bool &inQueue() const;
+
+    bool operator<(const client::Client& other) const;
 
 private:
     std::string m_name;

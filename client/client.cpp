@@ -52,6 +52,10 @@ void Client::setArrivalTime(const helpers::Time &arrivalTime)
     m_arrivalTime = arrivalTime;
 }
 
+bool Client::operator<(const client::Client &other) const
+{
+    return this->name() < other.name();
+}
 }
 
 

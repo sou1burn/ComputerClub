@@ -2,22 +2,11 @@
 #include <fstream>
 #include <optional>
 #include <sstream>
+#include <set>
 #include "client.h"
 #include "club.h"
 #include "utils.h"
 #include "table.h"
-
-namespace helpers
-{
-    struct Event
-    {
-        helpers::Time m_time;
-        int m_id;
-        std::string m_name;
-        std::optional<int> m_tableId;
-    };
-   
-}
 
 
 int main(int argc, char** argv) {
@@ -46,7 +35,7 @@ int main(int argc, char** argv) {
         std::istringstream iss(line);
         helpers::Event event;
         std::string time;
-        iss >> time >>event.m_id >> event.m_name >> tableIdStr;
+        iss >> time >> event.m_id >> event.m_name >> tableIdStr;
         if (!tableIdStr.empty()) {
             std::istringstream(tableIdStr) >> std::ws;
             if (std::isdigit(tableIdStr[0]))
@@ -68,12 +57,20 @@ int main(int argc, char** argv) {
             std::cout << " ";
         std::cout << "\n";
     }
-    std::vector<client::Client> clients;
-    clients.reserve(events.size());
+
+    std::set<client::Client> clients;
 
     for (const auto& event : events)
-        clients.emplace_back(event.m_time, event.m_name);
+        clients.insert(client::Client(event.m_time, event.m_name));
 
+    club::Club club(tableCount, costPerHour, helpers::Time::fromString(openTime), helpers::Time::fromString(closeTime), clients);
+
+    for (const auto &event : events)
+        club.processEvent(event);
+
+    auto logs = club.getLogs();
+    for (const auto& log : logs)
+        std::cout << log << "\n";
 
     return 0;
 }
