@@ -2,70 +2,57 @@
 #include <iomanip>
 #include "client.h"
 
-// namespace club {
-//     Time Time::fromString(const std::string &value)
-//     {
-//         Time t;
-//         char sep;
-//
-//         std::istringstream ss(value);
-//         ss >> t.hour >> sep >> t.minute;
-//
-//         if (ss.fail() || sep != ':' || t.hour < 0 || t.hour >= 24 || t.minute < 0 || t.minute >= 60) {
-//             throw std::invalid_argument("Invalid time format: " + value);
-//         }
-//
-//         return t;
-//     }
-//
-//     std::string Time::toString() const
-//     {
-//         std::stringstream ss;
-//
-//         ss << std::setw(2) << std::setfill('0') << hour << ":" << std::setw(2) << std::setfill('0') << minute;
-//         return ss.str();
-//     }
-//
-//     bool Time::operator<(const Time &other) const
-//     {
-//         return (hour < other.hour) || (hour == other.hour && minute < other.minute);
-//     }
-//
-//     bool Time::operator>(const Time &other) const
-//     {
-//         return (hour > other.hour) || (hour == other.hour && minute > other.minute);
-//     }
-//
-//     Time Time::operator-(const Time& other) const
-//     {
-//         const int total = this->toMinutes() - other.toMinutes();
-//         return Time::fromMinutes(total);
-//     }
-//
-//     bool Time::operator==(const Time& other) const
-//     {
-//         return hour == other.hour && minute == other.minute;
-//     }
-//
-//     Time Time::roundUp() const
-//     {
-//         return {minute > 0 ? hour + 1 : hour, 0};
-//     }
-//
-//     inline int Time::toMinutes() const
-//     {
-//         return hour * 60 + minute;
-//     }
-//
-//     inline Time Time::fromMinutes(const int &minutes)
-//     {
-//         if (minutes < 0)
-//             throw std::invalid_argument("Negative minutes in fromMinutes()");
-//
-//         return {minutes / 60, minutes % 60};
-//     }
-//
-// }
+namespace client
+{
+Client::Client(const club::Time &arrivalTime, std::string name)
+    : m_name(std::move(name)), m_arrivalTime(arrivalTime)
+{
+}
+const std::string &Client::name() const
+{
+    return m_name;
+}
+const club::Time &Client::arrivalTime() const
+{
+    return m_arrivalTime;
+}
+
+const int &Client::occupiedTable() const
+{
+    return m_occupiedTable;
+}
+
+const bool &Client::atClub() const
+{
+    return m_atClub;
+}
+
+const bool &Client::inQueue() const
+{
+    return m_inQueue;
+}
+
+void Client::setOccupiedTable(const int &table)
+{
+    m_occupiedTable = table;
+}
+
+void Client::setAtClub(const bool &atClub)
+{
+    m_atClub = atClub;
+}
+
+void Client::setInQueue(const bool &inQueue)
+{
+    m_inQueue = inQueue;
+}
+
+void Client::setArrivalTime(const club::Time &arrivalTime)
+{
+    m_arrivalTime = arrivalTime;
+}
+
+}
 
 
 

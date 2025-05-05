@@ -8,20 +8,19 @@ namespace client {
 class Client
 {
 public:
-    explicit Client(const club::Time &arrivalTime, std::string name)
-        : m_name(std::move(name)), m_arrivalTime(arrivalTime) {};
+    explicit Client(const club::Time &arrivalTime, std::string name);
 
     ~Client() = default;
 
-    const std::string &name() const { return m_name; }
-    const club::Time &arrivalTime() const { return m_arrivalTime; }
-    const int &occupiedTable() const { return m_occupiedTable; }
-    void setOccupiedTable(const int &table) { m_occupiedTable = table; }
-    void setArrivalTime(const club::Time &arrivalTime) { m_arrivalTime = arrivalTime; }
-    void setAtClub(const bool &atClub) { m_atClub = atClub; }
-    void setInQueue(const bool &inQueue) { m_inQueue = inQueue; }
-    const bool &atClub() const { return m_atClub; }
-    const bool &inQueue() const { return m_inQueue; }
+    const std::string &name() const;
+    const club::Time &arrivalTime() const;
+    const int &occupiedTable() const;
+    void setOccupiedTable(const int &table);
+    void setArrivalTime(const club::Time &arrivalTime);
+    void setAtClub(const bool &atClub);
+    void setInQueue(const bool &inQueue);
+    const bool &atClub() const;
+    const bool &inQueue() const;
 
 private:
     std::string m_name;
