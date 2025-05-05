@@ -4,10 +4,9 @@
 #include <set>
 #include <string>
 #include <vector>
-
+#include "client.h"
+#include "table.h"
 #include "utils.h"
-#include "../client/client.h"
-#include "../table/table.h"
 
 
 namespace club {

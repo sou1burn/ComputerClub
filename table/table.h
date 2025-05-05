@@ -16,7 +16,7 @@ public:
     const int &id() const;
     bool isOccupied() const;
     const std::string& clientName() const;
-    const helpers::Time& spentTime() const;
+    helpers::Time spentTime() const;
     const int &moneyEarned() const;
 
 private:
@@ -27,6 +27,7 @@ private:
     helpers::Time m_startTime {};
     int m_money {};
     int m_cost {};
+    int m_totalMinutes {};
 };
 
 }

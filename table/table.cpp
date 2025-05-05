@@ -21,9 +21,9 @@ const std::string &Table::clientName() const
     return m_clientName;
 }
 
-const helpers::Time &Table::spentTime() const
+helpers::Time Table::spentTime() const
 {
-    return m_spentTime;
+    return helpers::Time::fromMinutes(m_totalMinutes);
 }
 
 const int &Table::moneyEarned() const
@@ -40,9 +40,13 @@ void Table::occupy(const std::string &clientName, const helpers::Time &startTime
 
 void Table::release(const helpers::Time &endTime)
 {
+    const int sessionMinutes = (endTime - m_startTime).toMinutes();
+    const int hoursToPay = (sessionMinutes + 59)/ 60;
+    m_money += hoursToPay * m_cost;
+    m_totalMinutes += sessionMinutes;
     m_occupied = false;
-    m_spentTime = endTime - m_startTime;
-    m_money += m_spentTime.toMinutes() * m_cost / 60;
+    // m_spentTime = endTime - m_startTime;
+    m_clientName.clear();
 }
 
 void Table::reset()

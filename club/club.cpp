@@ -10,8 +10,8 @@ Club::Club(const int &tableCount, const int &costPerHour, const helpers::Time &o
       m_closeTime(closeTime)
 {
     m_tables.reserve(tableCount);
-    for (auto i = 0; i < tableCount; ++i)
-        m_tables.emplace_back(i + 1, m_costPerHour);
+    for (auto i = 1; i <= tableCount; ++i)
+        m_tables.emplace_back(i, m_costPerHour);
 
     for (const auto &client : clients)
         m_clients.insert(std::make_pair(client.name(), client));
@@ -23,9 +23,12 @@ void Club::log(const std::string &message)
 }
 
 void Club::processEvent(const helpers::Event &event) {
-    log(event.m_time.toString() + " " + std::to_string(event.m_id) + " " +
-        event.m_name + (event.m_tableId ? " " + std::to_string(event.m_tableId.value()) : ""));
+    std::string logMessage = event.m_time.toString() + " " + std::to_string(event.m_id) + " " + event.m_name;
 
+    if (event.m_id == 2 && event.m_tableId.has_value())
+        logMessage += " " + std::to_string(event.m_tableId.value());
+
+    log(logMessage);
     switch (event.m_id) {
         case 1: handleClientEnter(event);
             break;
@@ -53,7 +56,7 @@ void Club::handleClientEnter(const helpers::Event &event)
         log(event.m_time.toString() + " 13 YouShallNotPass");
         return;
     }
-    m_clients.try_emplace(event.m_name, client::Client(event.m_time, event.m_name));
+    m_clients.emplace(event.m_name, client::Client(event.m_time, event.m_name));
     m_clients.at(event.m_name).setArrivalTime(event.m_time);
     m_clients.at(event.m_name).setAtClub(true);
 }
@@ -67,22 +70,26 @@ void Club::handleClientSit(const helpers::Event &event)
     }
 
     const auto tableId = event.m_tableId.value();
+    if (tableId <= 0 || tableId > m_tables.size()) {
+        //log(event.m_time.toString() + " 13 TableDoesNotExist");
+        return;
+    }
     auto &table = m_tables[tableId - 1];
-    if (tableId >= 0 || table.isOccupied()) {
+    if (table.isOccupied()) {
         log(event.m_time.toString() + " 13 PlaceIsBusy");
         return;
     }
 
     if (client.occupiedTable() != -1)
-        m_tables[client.occupiedTable()].release(event.m_time);
+        m_tables[client.occupiedTable() - 1].release(event.m_time);
     table.occupy(client.name(), event.m_time);
     client.setOccupiedTable(tableId);
 }
 
 void Club::handleWaiting(const helpers::Event &event)
 {
-    if (m_waitingQueue.size() >= m_tables.size()) {
-        log(event.m_time.toString() + " 11" + event.m_name + "left from table " + "" + std::to_string(event.m_tableId.value()));
+    if (m_waitingQueue.size() > m_tables.size()) {
+        log(event.m_time.toString() + " 11 " + event.m_name + "left from table " + "" + std::to_string(event.m_tableId.value()));
         return;
     }
 
@@ -104,13 +111,17 @@ void Club::handleClientLeave(const helpers::Event &event)
         return;
     }
     if (client.occupiedTable() != -1) {
-        int oldTableId = client.occupiedTable();
-        m_tables[oldTableId].release(event.m_time);
-        serveClientFromQueue(oldTableId, event.m_time);
+        const int oldTableId = client.occupiedTable();
+        if (oldTableId <= 0 || oldTableId > m_tables.size()) {
+            return;
+        }
+        m_tables[oldTableId - 1].release(event.m_time);
+        serveClientFromQueue(oldTableId - 1, event.m_time);
     } else if (client.inQueue()) {
         m_waitingQueue.erase(std::find(m_waitingQueue.begin(), m_waitingQueue.end(), event.m_name));
     }
     client.setAtClub(false);
+    client.setOccupiedTable(-1);
 }
 
 const std::vector<std::string> &Club::getLogs()
@@ -124,10 +135,10 @@ void Club::serveClientFromQueue(const int &tableId, const helpers::Time &time)
         return;
     const std::string name = m_waitingQueue.front();
     m_waitingQueue.pop_front();
-    m_tables.at(tableId - 1).occupy(name, time);
-    m_clients.at(name).setOccupiedTable(tableId - 1);
+    m_tables.at(tableId).occupy(name, time);
+    m_clients.at(name).setOccupiedTable(tableId + 1);
     m_clients.at(name).setInQueue(false);
-    log(time.toString() + " 12 " + name + " " + std::to_string(tableId));
+    log(time.toString() + " 12 " + name + " " + std::to_string(tableId + 1));
 }
 
 void Club::closeClubAndLogEverything()
@@ -138,10 +149,14 @@ void Club::closeClubAndLogEverything()
     std::cout << m_closeTime.toString() << "\n";
     std::vector<std::string> remaining;
 
-    for (auto& [name, client] : m_clients)
-        if (client.atClub())
+    for (auto& [name, client] : m_clients) {
+        if (client.atClub()) {
+            const int tableId = client.occupiedTable();
+            if (tableId > 0 && tableId <= m_tables.size())
+                m_tables[tableId - 1].release(m_closeTime);
             remaining.push_back(name);
-
+        }
+    }
     std::sort(remaining.begin(), remaining.end());
     for (auto& name : remaining)
         std::cout << m_closeTime.toString() << " 11 " << name << "\n";

@@ -49,14 +49,14 @@ int main(int argc, char** argv) {
         events.push_back(event);
     }
 
-    for (const auto& [m_time, m_id, m_name, m_tableId] : events) {
-        std::cout << m_time.toString() << " | " << m_id << " | " << m_name << " | ";
-        if (m_tableId.has_value())
-            std::cout << m_tableId.value();
-        else
-            std::cout << " ";
-        std::cout << "\n";
-    }
+    // for (const auto& [m_time, m_id, m_name, m_tableId] : events) {
+    //     std::cout << m_time.toString() << " | " << m_id << " | " << m_name << " | ";
+    //     if (m_tableId.has_value())
+    //         std::cout << m_tableId.value();
+    //     else
+    //         std::cout << " ";
+    //     std::cout << "\n";
+    // }
 
     std::set<client::Client> clients;
 
