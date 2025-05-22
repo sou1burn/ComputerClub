@@ -28,7 +28,6 @@ private:
     int m_costPerHour {};
     helpers::Time m_openTime {};
     helpers::Time m_closeTime {};
-    // bool m_fullDay {false};
 
     void log(const std::string &message);
     void handleClientEnter(const helpers::Event &event);
