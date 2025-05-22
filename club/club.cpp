@@ -9,6 +9,11 @@ Club::Club(const int &tableCount, const int &costPerHour, const helpers::Time &o
       m_openTime(openTime),
       m_closeTime(closeTime)
 {
+    // if (m_closeTime == m_openTime)
+    //     m_fullDay = true;
+    // else
+    //     m_fullDay = false;
+
     m_tables.reserve(tableCount);
     for (auto i = 1; i <= tableCount; ++i)
         m_tables.emplace_back(i, m_costPerHour);
@@ -46,7 +51,7 @@ void Club::processEvent(const helpers::Event &event) {
 
 void Club::handleClientEnter(const helpers::Event &event)
 {
-    if (event.m_time < m_openTime || event.m_time > m_closeTime) {
+    if (!helpers::Time::isOpen(event.m_time, m_openTime, m_closeTime)) {
         log(event.m_time.toString() + " 13 NotOpenYet");
         return;
     }

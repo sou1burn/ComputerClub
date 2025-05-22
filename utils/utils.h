@@ -16,6 +16,8 @@ struct Time {
     bool operator>(const Time& other) const;
     Time operator-(const Time& other) const;
     bool operator==(const Time& other) const;
+    static bool isOpen(const Time &now, const Time &open, const Time &close);
+    bool operator>=(const Time &other) const;
 };
 
 struct Event

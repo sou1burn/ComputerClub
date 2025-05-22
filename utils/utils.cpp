@@ -65,4 +65,20 @@ inline Time Time::fromMinutes(const int &minutes)
 
     return {minutes / 60, minutes % 60};
 }
+
+bool Time::operator>=(const Time &other) const
+{
+    return !(*this < other);
+}
+
+bool Time::isOpen(const Time &now, const Time &open, const Time &close)
+{
+    if (open == close)
+        return true;
+    if (open < close)
+        return (now >= open && now < close);
+
+    return (now >= open || now < close);
+}
+
 } // namespace club
