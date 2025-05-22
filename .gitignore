@@ -13,7 +13,8 @@ cmake-build-debug-wsl
 *.dll
 *.so
 *.dylib
-
+*.a
+Makefile
 CMakeCache.txt
 CMakeFiles/
 cmake_install.cmake
