@@ -8,7 +8,6 @@
 #include "table.h"
 #include "utils.h"
 
-
 namespace club {
 
 class Club
@@ -18,7 +17,6 @@ public:
     ~Club() = default;
     void processEvent(const helpers::Event &event);
     void closeClubAndLogEverything();
-    const std::vector<std::string> &getLogs();
 
 private:
     std::vector<table::Table> m_tables {};

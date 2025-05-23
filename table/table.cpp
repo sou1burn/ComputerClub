@@ -16,11 +16,6 @@ bool Table::isOccupied() const
     return m_occupied;
 }
 
-const std::string &Table::clientName() const
-{
-    return m_clientName;
-}
-
 helpers::Time Table::spentTime() const
 {
     return helpers::Time::fromMinutes(m_totalMinutes);
@@ -45,7 +40,6 @@ void Table::release(const helpers::Time &endTime)
     m_money += hoursToPay * m_cost;
     m_totalMinutes += sessionMinutes;
     m_occupied = false;
-    // m_spentTime = endTime - m_startTime;
     m_clientName.clear();
 }
 
@@ -58,11 +52,4 @@ void Table::reset()
     m_startTime = helpers::Time();
 }
 
-std::string Table::status() const
-{
-    if (m_occupied)
-        return "Table " + std::to_string(m_id) + " is occupied by " + m_clientName;
-    else
-        return "Table " + std::to_string(m_id) + " is free";
-}
 }

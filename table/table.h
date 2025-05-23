@@ -11,11 +11,9 @@ public:
     void occupy(const std::string& clientName, const helpers::Time& startTime);
     void release(const helpers::Time& endTime);
     void reset();
-    std::string status() const;
 
     const int &id() const;
     bool isOccupied() const;
-    const std::string& clientName() const;
     helpers::Time spentTime() const;
     const int &moneyEarned() const;
 

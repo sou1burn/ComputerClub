@@ -3,11 +3,8 @@
 #include <optional>
 #include <sstream>
 #include <set>
-#include "client.h"
 #include "club.h"
 #include "utils.h"
-#include "table.h"
-
 
 int main(int argc, char** argv) {
     if (argc != 2)

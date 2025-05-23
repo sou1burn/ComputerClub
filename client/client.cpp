@@ -12,10 +12,11 @@ const std::string &Client::name() const
 {
     return m_name;
 }
-const helpers::Time &Client::arrivalTime() const
-{
-    return m_arrivalTime;
-}
+
+// const helpers::Time &Client::arrivalTime() const
+// {
+//     return m_arrivalTime;
+// }
 
 const int &Client::occupiedTable() const
 {

@@ -124,11 +124,6 @@ void Club::handleClientLeave(const helpers::Event &event)
     client.setOccupiedTable(-1);
 }
 
-const std::vector<std::string> &Club::getLogs()
-{
-    return m_log;
-}
-
 void Club::serveClientFromQueue(const int &tableId, const helpers::Time &time)
 {
     if (m_waitingQueue.empty())
