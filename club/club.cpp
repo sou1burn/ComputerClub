@@ -43,7 +43,6 @@ void Club::processEvent(const helpers::Event &event) {
     }
 }
 
-
 void Club::handleClientEnter(const helpers::Event &event)
 {
     if (!helpers::Time::isOpen(event.m_time, m_openTime, m_closeTime)) {
@@ -70,10 +69,9 @@ void Club::handleClientSit(const helpers::Event &event)
     }
 
     const auto tableId = event.m_tableId.value();
-    if (tableId <= 0 || tableId > m_tables.size()) {
-        //log(event.m_time.toString() + " 13 TableDoesNotExist");
+    if (tableId <= 0 || tableId > m_tables.size())
         return;
-    }
+
     auto &table = m_tables[tableId - 1];
     if (table.isOccupied()) {
         log(event.m_time.toString() + " 13 PlaceIsBusy");
@@ -112,14 +110,12 @@ void Club::handleClientLeave(const helpers::Event &event)
     }
     if (client.occupiedTable() != -1) {
         const int oldTableId = client.occupiedTable();
-        if (oldTableId <= 0 || oldTableId > m_tables.size()) {
+        if (oldTableId <= 0 || oldTableId > m_tables.size())
             return;
-        }
         m_tables[oldTableId - 1].release(event.m_time);
         serveClientFromQueue(oldTableId - 1, event.m_time);
-    } else if (client.inQueue()) {
+    } else if (client.inQueue())
         m_waitingQueue.erase(std::find(m_waitingQueue.begin(), m_waitingQueue.end(), event.m_name));
-    }
     client.setAtClub(false);
     client.setOccupiedTable(-1);
 }
@@ -141,6 +137,7 @@ void Club::closeClubAndLogEverything()
     std::cout << m_openTime.toString() << "\n";
     for (auto& l : m_log)
         std::cout << l << "\n";
+
     std::cout << m_closeTime.toString() << "\n";
     std::vector<std::string> remaining;
 

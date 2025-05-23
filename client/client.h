@@ -13,7 +13,6 @@ public:
     Client& operator=(const Client& other) = default;
 
     const std::string &name() const;
-    // const helpers::Time &arrivalTime() const;
     const int &occupiedTable() const;
     void setOccupiedTable(const int &table);
     void setArrivalTime(const helpers::Time &arrivalTime);

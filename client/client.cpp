@@ -13,11 +13,6 @@ const std::string &Client::name() const
     return m_name;
 }
 
-// const helpers::Time &Client::arrivalTime() const
-// {
-//     return m_arrivalTime;
-// }
-
 const int &Client::occupiedTable() const
 {
     return m_occupiedTable;
@@ -57,6 +52,7 @@ bool Client::operator<(const client::Client &other) const
 {
     return this->name() < other.name();
 }
+
 }
 
 
